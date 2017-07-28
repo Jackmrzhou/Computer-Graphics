@@ -7,6 +7,10 @@ public:
     {
         x = a, y = b, z = c;
     }
+	Vector3(const Vector3 &v)
+	{
+		x = v.x, y = v.y, z = v.z;
+	}
     float x, y, z;
     void out();
     Vector3 &normalize();

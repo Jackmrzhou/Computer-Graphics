@@ -27,8 +27,9 @@ void main()
 	//test Vector3
 	float sy, sx;
     initgraph(Width, Height);
-    Sphere TestSphere(Vector3(-8,0,0), 6, Vector3(200,0,0));
-	Sphere TestSphere2(Vector3(8, 0, 0),6, Vector3(0,200,0));
+    Sphere TestSphere(Vector3(-8,0,0), 7, Vector3(200,0,0));
+	Sphere TestSphere2(Vector3(8, 0, 0),7, Vector3(0,200,0));
+	TestGround Ground(Vector3(0,0,1), Vector3(0,0,-7));
 	vector<Sphere*> ObjectGroup;
 	ObjectGroup.push_back(&TestSphere);
 	ObjectGroup.push_back(&TestSphere2);
@@ -47,8 +48,8 @@ void main()
 				auto color = ComputeColor(result);
 				putpixel(x, y, RGB(color.x, color.y, color.z));
 			}
-			else
-				putpixel(x, y, RGB((1-sy)*255, (1 - sy) * 255, (1 - sy) * 255));
+			//else
+				//putpixel(x, y, RGB((1-sy)*255, (1 - sy) * 255, (1 - sy) * 255));
 		}
 	}
 	_getch();
@@ -68,15 +69,12 @@ HitProperty GetIntersection(Ray & ray,const vector<Sphere*> &v)
 		{
 			hit = true;
 			if (record.distance > temp->distance)
-			{
-				record.distance = temp->distance;
-				record.NormalVector = temp->NormalVector;
-				record.hVector = temp->hVector;
-				record.HitColor = temp->HitColor;
-			}
+				record.copy(temp);
 			Ray ShadowRay(Light.LightDirection, record.HitPoint);
 			for (auto &o : v)
 			{
+				if (&o == &obj)
+					continue;
 				auto * result = &o->Intersection(ShadowRay);
 				if (result->distance != 0)
 				{

@@ -1,5 +1,6 @@
 #ifndef _Basic_H
 #define _Basic_H
+
 class HitProperty
 {
 public:
@@ -23,6 +24,7 @@ public:
 	Vector3 NormalVector, hVector, HitColor, HitPoint;
 	float distance;
 	bool IsShadow = false;
+	void copy(HitProperty *p);
 };
 
 class LightSource
@@ -90,4 +92,15 @@ public:
 	Ray generate_ray(float x, float y);
 };
 
+class TestGround
+{
+public:
+	TestGround(const Vector3 &n, const Vector3 &p)
+	{
+		NormalVector.copy(n);
+		Point.copy(p);
+	}
+	Vector3 NormalVector, Point;
+	HitProperty Intersection(Ray &ray);
+};
 #endif

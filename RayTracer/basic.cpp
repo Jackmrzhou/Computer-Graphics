@@ -2,6 +2,16 @@
 #include "Vector3.hpp"
 #include "basic.hpp"
 extern LightSource Light;
+
+void HitProperty::copy(HitProperty *p)
+{
+	distance = p->distance;
+	NormalVector = p->NormalVector;
+	hVector = p->hVector;
+	HitColor = p->HitColor;
+	HitPoint = p->HitPoint;
+}
+
 Ray Camera::generate_ray(float x,float y)
 {
     return Ray((ViewDirection.multiply(0.5) + Right.multiply(x-0.5) + UpDirection.multiply(y-0.5)),
@@ -13,7 +23,7 @@ HitProperty Sphere::Intersection(Ray &ray)
     Vector3 v = ray.origin - center;
     float a = v.sqrLenth() - Radius * Radius;
     float DdotV = ray.direction * v;
-	if (DdotV < 0)
+	if (DdotV <= 0)
 	{
 		float discr = DdotV * DdotV - a;
 		if (discr >= 0)
@@ -26,4 +36,12 @@ HitProperty Sphere::Intersection(Ray &ray)
 		}
 	}
     return HitProperty();//means no hit
+}
+
+HitProperty TestGround::Intersection(Ray &ray)
+{
+	float t = (Point*NormalVector) / (ray.direction*NormalVector);
+	Vector3 HitPoint(ray.origin + ray.direction.multiply(t));
+	Vector3 color(0, 0, 0);
+	return HitProperty(NormalVector, Vector3(), color, HitPoint, t);
 }

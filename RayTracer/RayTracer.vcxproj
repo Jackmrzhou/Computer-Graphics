@@ -139,7 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Ray_Sphere_camera.cpp" />
+    <ClCompile Include="basic.cpp" />
     <ClCompile Include="ray_tracer.cpp" />
     <ClCompile Include="Vector3.cpp" />
   </ItemGroup>
