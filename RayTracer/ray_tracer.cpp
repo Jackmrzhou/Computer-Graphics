@@ -9,6 +9,7 @@ using namespace std;
 constexpr int Height = 640;
 constexpr int Width = 640;
 LightSource Light(Vector3(1, 1, 0));
+bool CheckShadow(Ray &ShadowRay, const vector<Sphere*> &v);
 HitProperty GetIntersection(Ray &ray,const vector<Sphere*> &v);
 Vector3 ComputeColor(HitProperty &p);
 void main()
@@ -29,7 +30,7 @@ void main()
     initgraph(Width, Height);
     Sphere TestSphere(Vector3(-8,0,0), 7, Vector3(200,0,0));
 	Sphere TestSphere2(Vector3(8, 0, 0),7, Vector3(0,200,0));
-	TestGround Ground(Vector3(0,0,1), Vector3(0,0,-7));
+	TestGround Ground(Vector3(0,1,0), Vector3(0,-7,0));
 	vector<Sphere*> ObjectGroup;
 	ObjectGroup.push_back(&TestSphere);
 	ObjectGroup.push_back(&TestSphere2);
@@ -48,8 +49,15 @@ void main()
 				auto color = ComputeColor(result);
 				putpixel(x, y, RGB(color.x, color.y, color.z));
 			}
-			//else
-				//putpixel(x, y, RGB((1-sy)*255, (1 - sy) * 255, (1 - sy) * 255));
+			else
+			{
+				result = Ground.Intersection(ray);
+				Ray ShadowRay(Light.LightDirection, result.HitPoint);
+				if (CheckShadow(ShadowRay, ObjectGroup))
+					putpixel(x, y, RGB(0, 0, 0));
+				else
+					putpixel(x, y, RGB(result.HitColor.x, result.HitColor.y, result.HitColor.z));
+			}
 		}
 	}
 	_getch();
@@ -71,22 +79,23 @@ HitProperty GetIntersection(Ray & ray,const vector<Sphere*> &v)
 			if (record.distance > temp->distance)
 				record.copy(temp);
 			Ray ShadowRay(Light.LightDirection, record.HitPoint);
-			for (auto &o : v)
-			{
-				if (&o == &obj)
-					continue;
-				auto * result = &o->Intersection(ShadowRay);
-				if (result->distance != 0)
-				{
-					record.IsShadow = true;
-					break;
-				}
-			}
+			record.IsShadow = CheckShadow(ShadowRay, v);
 		}
 	}
 	if (hit)
 		return record;
 	return HitProperty();
+}
+
+bool CheckShadow(Ray &ShadowRay, const vector<Sphere*> &v)
+{
+	for (auto &o : v)
+	{
+		auto * result = &o->Intersection(ShadowRay);
+		if (result->distance != 0)
+			return true;
+	}
+	return false;
 }
 
 Vector3 ComputeColor(HitProperty &p)

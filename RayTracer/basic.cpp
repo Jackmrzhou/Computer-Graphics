@@ -2,7 +2,7 @@
 #include "Vector3.hpp"
 #include "basic.hpp"
 extern LightSource Light;
-
+using namespace std;
 void HitProperty::copy(HitProperty *p)
 {
 	distance = p->distance;
@@ -42,6 +42,7 @@ HitProperty TestGround::Intersection(Ray &ray)
 {
 	float t = (Point*NormalVector) / (ray.direction*NormalVector);
 	Vector3 HitPoint(ray.origin + ray.direction.multiply(t));
-	Vector3 color(0, 0, 0);
-	return HitProperty(NormalVector, Vector3(), color, HitPoint, t);
+	if ((int)abs((floor(HitPoint.x*0.5)) +floor(HitPoint.y*0.5)) % 2 < 1)
+		return HitProperty(NormalVector, Vector3(), Vector3(0,0,0), HitPoint, t);
+	return HitProperty(NormalVector, Vector3(), Vector3(255, 255, 255), HitPoint, t);
 }
