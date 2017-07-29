@@ -8,10 +8,11 @@
 using namespace std;
 constexpr int Height = 640;
 constexpr int Width = 640;
-LightSource Light(Vector3(1, 1, 0));
+LightSource Light(Vector3(1, 1, 0.5));
 bool CheckShadow(Ray &ShadowRay, const vector<Sphere*> &v);
 HitProperty GetIntersection(Ray &ray,const vector<Sphere*> &v);
 Vector3 ComputeColor(HitProperty &p);
+inline void ValidateColor(Vector3 &color);
 void main()
 {
     /*Vector3 a(1, 2, 3), b(2, 3, 4);
@@ -53,6 +54,15 @@ void main()
 			{
 				result = Ground.Intersection(ray);
 				Ray ShadowRay(Light.LightDirection, result.HitPoint);
+				Ray ReflectRay(ray.direction - Ground.NormalVector.multiply(2 * (ray.direction*Ground.NormalVector))
+					, result.HitPoint);
+				auto R_hit = GetIntersection(ReflectRay, ObjectGroup);
+				if (R_hit.distance != 0)
+				{
+					auto color = ComputeColor(R_hit).multiply(0.75);
+					result.HitColor = result.HitColor + color;
+					ValidateColor(result.HitColor);
+				}
 				if (CheckShadow(ShadowRay, ObjectGroup))
 					putpixel(x, y, RGB(0, 0, 0));
 				else
@@ -111,12 +121,17 @@ Vector3 ComputeColor(HitProperty &p)
 	//specular color
 	//no ambient color.
 	//set exponent 16
+	ValidateColor(color);
+	//it seems wingdi don't check the validation of RGB
+	return color;
+}
+
+inline void ValidateColor(Vector3 &color)
+{
 	if (color.x > 255)
 		color.x = 255;
 	if (color.y > 255)
 		color.y = 255;
 	if (color.z > 255)
 		color.z = 255;
-	//it seems wingdi don't check the validation of RGB
-	return color;
 }

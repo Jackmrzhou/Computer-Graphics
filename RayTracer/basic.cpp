@@ -44,5 +44,5 @@ HitProperty TestGround::Intersection(Ray &ray)
 	Vector3 HitPoint(ray.origin + ray.direction.multiply(t));
 	if ((int)abs((floor(HitPoint.x*0.5)) +floor(HitPoint.y*0.5)) % 2 < 1)
 		return HitProperty(NormalVector, Vector3(), Vector3(0,0,0), HitPoint, t);
-	return HitProperty(NormalVector, Vector3(), Vector3(255, 255, 255), HitPoint, t);
+	return HitProperty(NormalVector, Vector3(), Vector3(150, 150, 150), HitPoint, t);
 }

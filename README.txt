@@ -10,4 +10,4 @@ Why use EasyX? Because it is the simplest to see the result.
 
 My compile environment:VS 2017
 
-I have not add the reflectness.
+The final render result is final.png.
