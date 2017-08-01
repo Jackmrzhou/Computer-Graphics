@@ -1,7 +1,7 @@
-#Computer Graphics
+# Computer Graphics
 ---
 Learn by doing!
-##Ray Tracer
+## Ray Tracer
 A simple ray tracer, which implements basic render operations:
 * Generate ray
 * Intersection
@@ -12,7 +12,7 @@ The shadow and reflect is also available, but only the ground can reflect.(Becau
 
 The final render result is final.png.![](https://github.com/Jackmrzhou/Computer-Graphics/blob/master/final.png?raw=true)
 
-##Transformation Matrix
+## Transformation Matrix
 Using 2*2 matrix to rotate or scale a picture.
 
 ---
