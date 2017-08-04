@@ -30,12 +30,14 @@ void main()
 	auto ans = rotation * scale;
 	//cout << ans.R1.x << ',' << ans.R1.y << endl;
 	//cout << ans.R2.x << ',' << ans.R2.y << endl;
-	Matrix2_2 test(Vector2(0.707, -0.707), Vector2(0.353, 0.353));
+	Matrix2_2 R1(Vector2(1, 1 - 0.707 * 2), Vector2(0, 1));
+	Matrix2_2 T(Vector2(1, 0), Vector2(0.707, 1));
 	for (int x = 0; x != img.getwidth(); ++x)
 		for (int y=img.getheight(); y>=0; --y)
 		{
 			Vector2 v(x,img.getheight() - y);
-			auto result = scale*rotation*v;
+			auto result = R1*T*R1*v;
+			//Paeth decomposition
 			if (CheckDrawValidation(result))
 				putpixel(result.x, result.y, pMem[x+img.getheight()*y]);
 		}
