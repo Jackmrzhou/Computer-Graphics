@@ -28,16 +28,18 @@ int main()
 	setorigin(0, Height);
 	setaspectratio(1, -1);
 
-	Vector3 e(2, 2, 2), g(-1, -0.5, -0.5), t(0, 0, 1);
+	Vector3 e(2, 1.5, 1.2), g(-1, -1.5, -1.1), t(0, 0, 1);
+	//e represents camera's origin point, g is gaze direction, t is view-up vector
 	auto M_cam = ConstructCamMatrix(e, g, t);
 	Vector3 p1(-2, -2, -2), p2(2, 2, -6);
+	//p1,p2 is two points determine the border of view volumn
 	auto M_orth = ConstructOrthMatrix(p1, p2);
 	auto M_vp = ConstructVpMatrix();
 	auto M_per = ConstructPerMatrix(p1, p2);
 	//auto &P = Matrix4(Vector3(p1.z, 0, 0), Vector3(0, p1.z, 0), Vector3(0, 0, p1.z + p2.z), Vector3(0, 0, -p1.z*p2.z));
 	//P.data[3][2] = 1, P.data[3][3] = 0;
-	auto M = M_vp*M_orth*M_cam;
-	//auto M = M_vp*M_per*M_cam;
+	//auto M = M_vp*M_orth*M_cam;
+	auto M = M_vp*M_per*M_cam;
 	ProjectionTest(M);
 	_getch();
 	closegraph();
