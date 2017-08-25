@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ray_tracer.cpp">
+    <ClCompile Include="RayTrace.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Vector3.cpp">

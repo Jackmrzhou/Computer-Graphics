@@ -20,9 +20,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{E4F626BB-8372-469F-B21A-0BE7B88CB02B}</ProjectGuid>
+    <ProjectGuid>{AE96F0F5-91E6-4928-820C-1CB67185E4AB}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>RayTracer</RootNamespace>
+    <RootNamespace>RayTrace</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -140,7 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="basic.cpp" />
-    <ClCompile Include="ray_tracer.cpp" />
+    <ClCompile Include="RayTrace.cpp" />
     <ClCompile Include="Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
