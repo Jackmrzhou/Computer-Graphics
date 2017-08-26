@@ -4,8 +4,9 @@ using namespace std;
 extern Light gLight;
 Ray Camera::generate_ray(float x, float y)
 {
-	return Ray((ViewDirection.multiply(0.5f) + Right.multiply(x - 0.5f) + UpDirection.multiply(y*0.75 - 0.375f)),
+	return Ray((ViewDirection.multiply(0.5f) + Right.multiply(x - 0.5f) + UpDirection.multiply(y*0.75f - 0.375f)),
 		ViewPoint);
+	//if you change the WindowHeight and WindowWidth, do make change here
 }
 
 void Sample::copy(const Sample &s)

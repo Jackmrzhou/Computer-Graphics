@@ -29,7 +29,7 @@ public:
 	float refl;
 	void copy(const Sample &s);
 };
-class Object;
+
 class Hit
 {
 public:
